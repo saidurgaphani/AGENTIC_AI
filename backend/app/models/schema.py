@@ -10,10 +10,13 @@ from sqlalchemy import (
     Date,
     Text,
     ForeignKey,
+    JSON,
 )
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from backend.app.database import Base
+
+JSONType = JSONB().with_variant(JSON, "sqlite")
 
 class DatasetVersion(Base):
     __tablename__ = "dataset_versions"
@@ -23,7 +26,7 @@ class DatasetVersion(Base):
     name = Column(String(255), nullable=False)
     seed = Column(String(64), nullable=False)
     currency = Column(String(16), default="USD", nullable=False)
-    manifest = Column(JSONB, nullable=True)
+    manifest = Column(JSONType, nullable=True)
     imported_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     status = Column(String(32), default="ACTIVE", nullable=False)
 
@@ -150,7 +153,7 @@ class AgentConfiguration(Base):
     temperature = Column(Numeric(3, 2), default=0.2, nullable=False)
     max_retries = Column(Integer, default=3, nullable=False)
     timeout_seconds = Column(Integer, default=30, nullable=False)
-    parameters = Column(JSONB, nullable=True)
+    parameters = Column(JSONType, nullable=True)
     health_status = Column(String(32), default="HEALTHY", nullable=False)
     last_execution_at = Column(DateTime, nullable=True)
     last_latency_ms = Column(Integer, nullable=True)
@@ -201,7 +204,7 @@ class PlanningRun(Base):
     completion_time = Column(DateTime, nullable=True)
     runtime_ms = Column(Integer, default=0, nullable=False)
     hard_violations = Column(Integer, default=0, nullable=False)
-    metrics = Column(JSONB, nullable=False) # Dictionary of calculated metrics & dayByDay
+    metrics = Column(JSONType, nullable=False) # Dictionary of calculated metrics & dayByDay
     error_message = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
@@ -216,16 +219,16 @@ class AgentProposal(Base):
     agent_type = Column(String(64), nullable=False)
     action_summary = Column(Text, nullable=False)
     action_type = Column(String(64), nullable=False)
-    affected_entity_ids = Column(JSONB, nullable=False)
-    action_parameters = Column(JSONB, nullable=False)
-    evidence_refs = Column(JSONB, nullable=False)
+    affected_entity_ids = Column(JSONType, nullable=False)
+    action_parameters = Column(JSONType, nullable=False)
+    evidence_refs = Column(JSONType, nullable=False)
     expected_benefits = Column(Text, nullable=False)
     expected_cost_delta = Column(Numeric(12, 2), nullable=False)
-    risks = Column(JSONB, nullable=False)
-    assumptions = Column(JSONB, nullable=False)
+    risks = Column(JSONType, nullable=False)
+    assumptions = Column(JSONType, nullable=False)
     confidence_score = Column(Numeric(4, 2), nullable=False)
     validation_status = Column(String(32), default="VALIDATED", nullable=False)
-    rejection_reasons = Column(JSONB, nullable=True)
+    rejection_reasons = Column(JSONType, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     run = relationship("PlanningRun", back_populates="proposals")
@@ -280,6 +283,6 @@ class AuditEvent(Base):
     target_entity = Column(String(64), nullable=False)
     target_id = Column(String(64), nullable=False)
     details = Column(Text, nullable=True)
-    before_state = Column(JSONB, nullable=True)
-    after_state = Column(JSONB, nullable=True)
+    before_state = Column(JSONType, nullable=True)
+    after_state = Column(JSONType, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow, nullable=False)

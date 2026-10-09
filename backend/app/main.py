@@ -10,20 +10,32 @@ from backend.app.api.v1 import (
     runs,
     plans,
     audit,
+    overview,
+    evaluations,
+    constraints,
+    agents,
+    auth_routes,
+    supply_chain,
 )
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="Production-oriented REST API for AI Agents for Resilient Supply Chain Manufacturing POC.",
+    description="Authoritative REST API for AI Agents for Resilient Supply Chain Manufacturing POC.",
 )
 
-# CORS configuration
+# Secure CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3005",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:3005",
+    ],
+    allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:[0-9]+)?",
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
 
@@ -41,16 +53,25 @@ async def global_exception_handler(request: Request, exc: Exception):
         },
     )
 
-# Include routers
+# Include routers under /api/v1 prefix
 api_v1_prefix = settings.API_V1_STR
 
 app.include_router(health.router, prefix=api_v1_prefix)
+app.include_router(overview.router, prefix=api_v1_prefix)
 app.include_router(network.router, prefix=api_v1_prefix)
 app.include_router(dataset.router, prefix=api_v1_prefix)
 app.include_router(scenarios.router, prefix=api_v1_prefix)
+app.include_router(evaluations.router, prefix=api_v1_prefix)
 app.include_router(runs.router, prefix=api_v1_prefix)
 app.include_router(plans.router, prefix=api_v1_prefix)
 app.include_router(audit.router, prefix=api_v1_prefix)
+app.include_router(constraints.router, prefix=api_v1_prefix)
+app.include_router(agents.router, prefix=api_v1_prefix)
+app.include_router(auth_routes.router, prefix=api_v1_prefix)
+app.include_router(supply_chain.router, prefix=api_v1_prefix)
+
+# Shared route at /api/supply-chain
+app.include_router(supply_chain.router, prefix="/api")
 
 @app.get("/")
 def root():
@@ -59,4 +80,5 @@ def root():
         "version": settings.VERSION,
         "docs_url": "/docs",
         "api_v1": api_v1_prefix,
+        "source_of_truth": "Neon PostgreSQL",
     }
