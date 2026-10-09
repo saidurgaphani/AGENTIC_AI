@@ -115,3 +115,43 @@ def test_insufficient_alternate_capacity():
     # With only 50 units capacity, backorders must occur
     assert res["total_backorders"] > 0
     assert res["fill_rate_percent"] < 100.0
+
+def test_candidate_actions_override():
+    """Verify that candidate_actions passed to solver correctly overrides capacities and parameters."""
+    optimizer = SupplyChainOptimizer(
+        horizon_days=14,
+        daily_demand=200,
+        initial_stock=100,
+        disruption_start=4,
+        disruption_end=10,
+        shortage_penalty=150.0,
+        primary_sup_cap=300,
+        primary_sup_lead=3,
+        primary_sup_cost=140.0,
+        primary_freight_cost=18.0,
+        alt_sup_cap=250, # Physical capacity is 250
+        alt_sup_lead_norm=5,
+        alt_sup_lead_exp=2, # Physical expedite limit is 2
+        alt_sup_cost=195.0,
+        alt_freight_norm=22.0,
+        alt_freight_exp=44.0,
+        prod_unit_cost=84.0,
+        holding_cost_per_day=2.0,
+    )
+    
+    # Pass candidate_actions that restricts alternate capacity to 50
+    # Even though physical is 250, the agent only negotiated 50.
+    candidate_actions = {
+        "alternate_daily_capacity": 50,
+        "allow_alternate_sourcing": True,
+        "allow_expedited_shipping": True
+    }
+    
+    res = optimizer.solve(
+        strategy="MULTI_AGENT_OPTIMIZATION",
+        candidate_actions=candidate_actions
+    )
+    
+    # With capacity limited to 50, it cannot meet 200 demand during 7 day disruption
+    assert res["total_backorders"] > 0
+    assert res["fill_rate_percent"] < 100.0

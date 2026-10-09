@@ -2,12 +2,21 @@
 
 import { useState } from 'react';
 import { AlertTriangle, Clock, Layers, TrendingDown, ShieldAlert, ArrowRight } from 'lucide-react';
-import { CANONICAL_SCENARIO } from '@/data/benchmark-dataset';
-import { runSimulation } from '@/data/simulation-engine';
+import { useSimulationData } from '@/hooks/useSimulationData';
 
 export function DisruptionAnalysis() {
-  const { reorderBaseline } = runSimulation();
+  const { data, isLoading, error } = useSimulationData();
   const [selectedDay, setSelectedDay] = useState<number>(7);
+
+  if (isLoading) {
+    return <section id="disruption" className="w-full py-20 px-6 lg:px-12 max-w-[1240px] mx-auto border-t border-[#c6c6c6] text-center font-mono">EXECUTING MULTI-AGENT SIMULATION ENGINE...</section>;
+  }
+
+  if (error || !data) {
+    return <section id="disruption" className="w-full py-20 px-6 lg:px-12 max-w-[1240px] mx-auto border-t border-[#c6c6c6] text-center font-mono text-red-500">SIMULATION ENGINE ERROR OR UNAVAILABLE.</section>;
+  }
+
+  const { reorderBaseline } = data;
 
   const dayData = reorderBaseline.dayByDayMetrics.find((m) => m.day === selectedDay) || reorderBaseline.dayByDayMetrics[6];
 

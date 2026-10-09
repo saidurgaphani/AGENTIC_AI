@@ -61,6 +61,7 @@ class SupplyChainOptimizer:
         allow_alternate: bool = True,
         allow_expediting: bool = True,
         priority_dc_protection: bool = True,
+        candidate_actions: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         solver = pywraplp.Solver.CreateSolver("CBC")
         if not solver:
@@ -71,11 +72,28 @@ class SupplyChainOptimizer:
         # -------------------------------------------------------------
         # Decision Variables
         # -------------------------------------------------------------
+        if candidate_actions and strategy == "MULTI_AGENT_OPTIMIZATION":
+            allow_alternate = candidate_actions.get("allow_alternate_sourcing", allow_alternate)
+            allow_expediting = candidate_actions.get("allow_expedited_shipping", allow_expediting)
+            priority_dc_protection = candidate_actions.get("priority_protection", priority_dc_protection)
+            
+            agent_alt_cap = candidate_actions.get("alternate_daily_capacity", self.alt_sup_cap)
+            applied_alt_cap = min(agent_alt_cap, self.alt_sup_cap)
+            
+            agent_exp_lead = candidate_actions.get("expedited_transit_days", self.alt_sup_lead_exp)
+            applied_exp_lead = max(agent_exp_lead, self.alt_sup_lead_exp)
+            
+            expedited_max_volume = candidate_actions.get("expedited_max_volume", None)
+        else:
+            applied_alt_cap = self.alt_sup_cap
+            applied_exp_lead = self.alt_sup_lead_exp
+            expedited_max_volume = None
+
         # 1. Orders placed at primary supplier SUP-01 (Sendai)
         order_sup1 = {t: solver.IntVar(0, self.primary_sup_cap, f"ord_sup1_{t}") for t in T}
 
         # 2. Orders placed at alternate supplier SUP-02 (Munich)
-        cap_alt = self.alt_sup_cap if allow_alternate else 0
+        cap_alt = applied_alt_cap if allow_alternate else 0
         order_sup2_norm = {t: solver.IntVar(0, cap_alt, f"ord_sup2_norm_{t}") for t in T}
         order_sup2_exp = {
             t: solver.IntVar(0, cap_alt if allow_expediting else 0, f"ord_sup2_exp_{t}") for t in T
@@ -84,6 +102,9 @@ class SupplyChainOptimizer:
         # Joint capacity constraint: normal + expedite <= alternate capacity
         for t in T:
             solver.Add(order_sup2_norm[t] + order_sup2_exp[t] <= cap_alt)
+
+        if expedited_max_volume is not None:
+            solver.Add(solver.Sum([order_sup2_exp[t] for t in T]) <= expedited_max_volume)
 
         # 3. Daily production of finished goods (SKU-900) at Plant Alpha
         prod = {t: solver.IntVar(0, self.plant_capacity, f"prod_{t}") for t in T}
@@ -120,7 +141,7 @@ class SupplyChainOptimizer:
         # C. Material Conservation & Lead-Time Balance:
         lead_sup1 = self.primary_sup_lead
         lead_sup2_n = self.alt_sup_lead_norm
-        lead_sup2_e = self.alt_sup_lead_exp
+        lead_sup2_e = applied_exp_lead
 
         for t in T:
             # Pre-disruption pipeline orders placed before day 1 arrive on days 1..lead_sup1

@@ -127,12 +127,17 @@ class SimulationService:
         raw_results = {}
         for strat_name, r_id, allow_alt, allow_exp, priority_dc in strategies:
             start_t = time.time()
-            res = optimizer.solve(
-                strategy=strat_name,
-                allow_alternate=allow_alt,
-                allow_expediting=allow_exp,
-                priority_dc_protection=priority_dc,
-            )
+            
+            kwargs = {
+                "strategy": strat_name,
+                "allow_alternate": allow_alt,
+                "allow_expediting": allow_exp,
+                "priority_dc_protection": priority_dc,
+            }
+            if strat_name == "MULTI_AGENT_OPTIMIZATION":
+                kwargs["candidate_actions"] = candidate_actions
+                
+            res = optimizer.solve(**kwargs)
             solver_ms = int((time.time() - start_t) * 1000)
             res["solver_runtime_ms"] = solver_ms
             res["run_id"] = r_id

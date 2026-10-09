@@ -33,3 +33,19 @@ def test_api_scenarios_list():
     assert isinstance(data, list)
     assert len(data) >= 1
     assert data[0]["critical_supplier_id"] == "sup-01"
+
+def test_api_scenario_runs():
+    """Verify that the FastAPI simulation execution path correctly calculates all 3 strategies."""
+    res = client.post(
+        "/api/v1/scenarios/SCN-2026-SHUTDOWN-07D/runs",
+        headers={"x-user-role": "planner", "x-user-id": "usr-planner-01"},
+        json={}
+    )
+    assert res.status_code == 201
+    data = res.json()
+    assert data["status"] == "COMPLETED"
+    assert len(data["results"]) == 3
+    strategies = [r["strategy"] for r in data["results"]]
+    assert "REORDER_BASELINE" in strategies
+    assert "OPTIMIZATION_ONLY" in strategies
+    assert "MULTI_AGENT_OPTIMIZATION" in strategies

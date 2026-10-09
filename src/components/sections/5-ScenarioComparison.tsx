@@ -11,15 +11,25 @@ import {
   DollarSign,
   ShieldCheck,
 } from 'lucide-react';
-import { runSimulation } from '@/data/simulation-engine';
+import { useSimulationData } from '@/hooks/useSimulationData';
 import { formatCurrency, formatPercent } from '@/lib/utils';
 import { StrategyResult } from '@/types/supply-chain';
 
 export function ScenarioComparison() {
-  const { reorderBaseline, optimizationOnly, multiAgentOptimization } = runSimulation();
+  const { data, isLoading, error } = useSimulationData();
   const [selectedStrategy, setSelectedStrategy] = useState<StrategyResult['strategyKey']>(
     'MULTI_AGENT_OPTIMIZATION'
   );
+
+  if (isLoading) {
+    return <section id="scenarios" className="w-full py-20 px-6 lg:px-12 max-w-[1240px] mx-auto border-t border-[#c6c6c6] text-center font-mono">LOADING SIMULATION DATA...</section>;
+  }
+
+  if (error || !data) {
+    return null;
+  }
+
+  const { reorderBaseline, optimizationOnly, multiAgentOptimization } = data;
 
   const strategies = [
     { key: 'REORDER_BASELINE', data: reorderBaseline, tag: 'BASELINE MRP' },
