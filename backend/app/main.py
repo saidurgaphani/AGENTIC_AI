@@ -44,18 +44,24 @@ origins = [
     "http://localhost:3005",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:3005",
+    "https://agentic-ai.vercel.app",
+    "https://agentic-ai-kd9m.onrender.com",
 ]
 
 if settings.CORS_ORIGINS:
-    origins.extend([origin.strip() for origin in settings.CORS_ORIGINS.split(",")])
+    for origin in settings.CORS_ORIGINS.split(","):
+        cleaned = origin.strip().rstrip("/")
+        if cleaned and cleaned not in origins:
+            origins.append(cleaned)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"http://(localhost|127\.0\.0\.1)(:[0-9]+)?",
+    allow_origin_regex=r"^https://.*\.vercel\.app$|^https://.*\.onrender\.com$|^http://(localhost|127\.0\.0\.1)(:[0-9]+)?$",
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # Exception handlers
@@ -93,6 +99,7 @@ app.include_router(supply_chain.router, prefix=api_v1_prefix)
 app.include_router(supply_chain.router, prefix="/api")
 
 @app.get("/")
+@app.head("/")
 def root():
     return {
         "project": settings.PROJECT_NAME,

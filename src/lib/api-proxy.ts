@@ -39,7 +39,13 @@ export async function proxyToFastAPI(req: NextRequest, targetPath: string): Prom
     });
     responseHeaders.set('x-authoritative-backend', 'FastAPI-Neon');
 
-    return new NextResponse(upstreamRes.body, {
+    // Buffer the upstream response before returning it. Passing the streaming
+    // body through directly can produce an empty response on Vercel for JSON
+    // health and metrics endpoints, even though the upstream request succeeds.
+    const hasNoBody = method === 'HEAD' || [204, 205, 304].includes(upstreamRes.status);
+    const responseBody = hasNoBody ? null : await upstreamRes.arrayBuffer();
+
+    return new NextResponse(responseBody, {
       status: upstreamRes.status,
       headers: responseHeaders,
     });
