@@ -19,7 +19,26 @@ import {
   ApiContractError,
 } from '@/types/planner-api';
 
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL || '/api/v1').replace(/\/+$/, '');
+function getBaseUrl(): string {
+  const envUrl = (process.env.NEXT_PUBLIC_API_URL || '').trim();
+  if (!envUrl) {
+    return '/api/v1';
+  }
+  const clean = envUrl.replace(/\/+$/, '');
+  if (clean.startsWith('http') && !clean.endsWith('/api/v1')) {
+    return `${clean}/api/v1`;
+  }
+  return clean;
+}
+
+export function buildApiUrl(endpoint: string): string {
+  const base = getBaseUrl();
+  let cleanEndpoint = endpoint.replace(/^\/+/, '');
+  if (base.endsWith('/api/v1') && cleanEndpoint.startsWith('api/v1/')) {
+    cleanEndpoint = cleanEndpoint.substring('api/v1/'.length);
+  }
+  return `${base}/${cleanEndpoint}`;
+}
 
 export class ApiError extends Error {
   status: number;
@@ -40,8 +59,7 @@ export class ApiError extends Error {
 }
 
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-  const url = `${API_BASE}${cleanEndpoint}`;
+  const url = buildApiUrl(endpoint);
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -71,7 +89,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
         status: res.status,
         error: res.statusText || 'API_ERROR',
         detail: errorDetail,
-        endpoint: cleanEndpoint,
+        endpoint,
         contractDependency:
           contractDependency || `FastAPI /api/v1 contract specification per docs/PRD.md Section 14`,
         timestamp: new Date().toISOString(),
@@ -91,7 +109,7 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
       detail:
         error.message ||
         `Unable to reach backend service at ${url}. Ensure the database-backed API service is running.`,
-      endpoint: cleanEndpoint,
+      endpoint,
       contractDependency: 'FastAPI /api/v1 (PRD §14) with Neon PostgreSQL',
       timestamp: new Date().toISOString(),
     };
@@ -119,7 +137,7 @@ export async function checkBackendHealth(): Promise<{
       connected: true,
       status: 'ONLINE',
       latencyMs,
-      endpoint: `${API_BASE}/overview/metrics`,
+      endpoint: buildApiUrl('/overview/metrics'),
       database: res?.environment?.database || 'Neon PostgreSQL',
     };
   } catch (err: any) {
@@ -131,7 +149,7 @@ export async function checkBackendHealth(): Promise<{
         connected: true,
         status: 'ONLINE',
         latencyMs,
-        endpoint: `${API_BASE}/network/summary`,
+        endpoint: buildApiUrl('/network/summary'),
       };
     } catch (innerErr: any) {
       const latencyMs = Math.round(performance.now() - start);
@@ -139,7 +157,7 @@ export async function checkBackendHealth(): Promise<{
         connected: false,
         status: 'OFFLINE',
         latencyMs,
-        endpoint: `${API_BASE}/overview/metrics`,
+        endpoint: buildApiUrl('/overview/metrics'),
         error: innerErr.detail || innerErr.message,
       };
     }

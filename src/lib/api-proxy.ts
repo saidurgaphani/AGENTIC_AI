@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const FASTAPI_TARGET = (process.env.FASTAPI_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '');
+const FASTAPI_TARGET = (process.env.FASTAPI_URL || 'http://127.0.0.1:8000').trim().replace(/\/+$/, '');
 
 export async function proxyToFastAPI(req: NextRequest, targetPath: string): Promise<NextResponse> {
-  const cleanPath = targetPath.startsWith('/') ? targetPath : `/${targetPath}`;
-  const targetUrl = `${FASTAPI_TARGET}${cleanPath}${req.nextUrl.search}`;
+  const cleanTarget = FASTAPI_TARGET.replace(/\/+$/, '');
+  const cleanPath = '/' + targetPath.replace(/^\/+/, '');
+  const targetUrl = `${cleanTarget}${cleanPath}${req.nextUrl.search}`;
   const method = req.method;
 
   const proxyHeaders = new Headers();
