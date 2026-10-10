@@ -18,10 +18,24 @@ from backend.app.api.v1 import (
     supply_chain,
 )
 
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Ensure tables exist in database on startup
+    try:
+        from backend.app.database import engine, Base
+        import backend.app.models  # ensure all models are registered
+        Base.metadata.create_all(bind=engine)
+    except Exception as e:
+        print(f"[STARTUP] Table creation notice: {e}")
+    yield
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     description="Authoritative REST API for AI Agents for Resilient Supply Chain Manufacturing POC.",
+    lifespan=lifespan,
 )
 
 # Secure CORS configuration

@@ -15,7 +15,18 @@ else:
     engine_kwargs["pool_size"] = 5
     engine_kwargs["max_overflow"] = 10
 
-engine = create_engine(db_uri, **engine_kwargs)
+try:
+    engine = create_engine(db_uri, **engine_kwargs)
+except Exception as e:
+    # Graceful fallback to SQLite if PostgreSQL connection fails
+    fallback_path = settings.BASE_DIR / "backend" / "backend_app.db"
+    db_uri = f"sqlite:///{fallback_path}"
+    engine_kwargs = {
+        "pool_pre_ping": True,
+        "connect_args": {"check_same_thread": False},
+    }
+    engine = create_engine(db_uri, **engine_kwargs)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

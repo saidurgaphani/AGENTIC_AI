@@ -41,7 +41,7 @@ def run_migrations_offline() -> None:
 
 
 def run_migrations_online() -> None:
-    configuration = config.get_section(config.config_ini_section)
+    configuration = config.get_section(config.config_ini_section) or {}
     configuration["sqlalchemy.url"] = settings.sqlalchemy_database_uri
     
     connectable = engine_from_config(
@@ -51,8 +51,13 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
+        # Ensure all tables exist first before running any alter migrations
+        target_metadata.create_all(connection)
+        
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection,
+            target_metadata=target_metadata,
+            render_as_batch=True,
         )
 
         with context.begin_transaction():

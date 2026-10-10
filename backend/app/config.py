@@ -37,16 +37,49 @@ class Settings(BaseSettings):
 
     @property
     def sqlalchemy_database_uri(self) -> str:
-        url = self.DATABASE_URL or self.DATABASE_URL_UNPOOLED
-        if not url:
-            # Fallback to local sqlite if no postgres configured in test env
-            return "sqlite:///./backend_test.db"
-        if url.startswith("postgres://"):
-            url = url.replace("postgres://", "postgresql://", 1)
+        # Check DATABASE_URL and DATABASE_URL_UNPOOLED
+        raw_url = (self.DATABASE_URL or self.DATABASE_URL_UNPOOLED or "").strip()
+        
+        # Strip enclosing quotes if user pasted with quotes
+        while (raw_url.startswith('"') and raw_url.endswith('"')) or (raw_url.startswith("'") and raw_url.endswith("'")):
+            raw_url = raw_url[1:-1].strip()
+            
+        # Strip 'psql ' if user copied neon's psql command
+        if raw_url.startswith("psql "):
+            raw_url = raw_url[5:].strip()
+            while (raw_url.startswith('"') and raw_url.endswith('"')) or (raw_url.startswith("'") and raw_url.endswith("'")):
+                raw_url = raw_url[1:-1].strip()
+                
+        # Handle empty or obvious placeholders
+        if (
+            not raw_url
+            or raw_url.lower() in ("none", "null", "undefined", "false", "true", "sqlite", "sqlite://")
+            or "<" in raw_url
+            or ">" in raw_url
+        ):
+            # Fallback to local sqlite
+            db_path = BASE_DIR / "backend" / "backend_app.db"
+            return f"sqlite:///{db_path}"
+            
+        # Normalize postgres:// to postgresql://
+        if raw_url.startswith("postgres://"):
+            raw_url = "postgresql://" + raw_url[len("postgres://"):]
+            
         # Ensure sslmode=require if connecting to Neon
-        if "neon.tech" in url and "sslmode" not in url:
-            connector = "&" if "?" in url else "?"
-            url = f"{url}{connector}sslmode=require"
-        return url
+        if "neon.tech" in raw_url and "sslmode" not in raw_url:
+            connector = "&" if "?" in raw_url else "?"
+            raw_url = f"{raw_url}{connector}sslmode=require"
+            
+        # Validate that SQLAlchemy can parse it
+        try:
+            from sqlalchemy.engine.url import make_url
+            parsed = make_url(raw_url)
+            if not parsed.drivername:
+                raise ValueError("No drivername parsed")
+            return raw_url
+        except Exception:
+            # If invalid URL, fallback to sqlite safely
+            db_path = BASE_DIR / "backend" / "backend_app.db"
+            return f"sqlite:///{db_path}"
 
 settings = Settings()
