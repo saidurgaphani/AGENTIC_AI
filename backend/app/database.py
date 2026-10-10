@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from backend.app.config import settings
+from backend.app.config import settings, BASE_DIR
 
 db_uri = settings.sqlalchemy_database_uri
 
@@ -19,7 +19,7 @@ try:
     engine = create_engine(db_uri, **engine_kwargs)
 except Exception as e:
     # Graceful fallback to SQLite if PostgreSQL connection fails
-    fallback_path = settings.BASE_DIR / "backend" / "backend_app.db"
+    fallback_path = BASE_DIR / "backend" / "backend_app.db"
     db_uri = f"sqlite:///{fallback_path}"
     engine_kwargs = {
         "pool_pre_ping": True,

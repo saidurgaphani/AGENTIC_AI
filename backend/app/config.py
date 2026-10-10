@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 class Settings(BaseSettings):
+    BASE_DIR: Path = BASE_DIR
     PROJECT_NAME: str = "AI Agents for Resilient Supply Chain Backend"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
@@ -61,9 +62,11 @@ class Settings(BaseSettings):
             db_path = BASE_DIR / "backend" / "backend_app.db"
             return f"sqlite:///{db_path}"
             
-        # Normalize postgres:// to postgresql://
+        # Normalize postgres:// to postgresql+psycopg2:// or postgresql:// to postgresql+psycopg2://
         if raw_url.startswith("postgres://"):
-            raw_url = "postgresql://" + raw_url[len("postgres://"):]
+            raw_url = "postgresql+psycopg2://" + raw_url[len("postgres://"):]
+        elif raw_url.startswith("postgresql://"):
+            raw_url = "postgresql+psycopg2://" + raw_url[len("postgresql://"):]
             
         # Ensure sslmode=require if connecting to Neon
         if "neon.tech" in raw_url and "sslmode" not in raw_url:
