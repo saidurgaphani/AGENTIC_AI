@@ -48,6 +48,7 @@ import { ErrorState, LoadingSkeleton } from '@/components/planner/ErrorState';
 
 export default function PlannerPage() {
   const [activeTab, setActiveTab] = useState<PlannerTabId>('overview');
+  const [activeSubTab, setActiveSubTab] = useState<'compare' | 'review' | 'intelligence'>('compare');
 
   // Core Data States
   const [scenarios, setScenarios] = useState<DisruptionScenario[]>([]);
@@ -224,7 +225,7 @@ export default function PlannerPage() {
     scenarios[0] || {
       id: 'SCN-POC-001-CANONICAL',
       name: 'Seven-Day Critical Supplier Shutdown',
-      description: 'Sendai harmonic actuator plant shutdown during Days 4-10 of 14-day horizon.',
+      description: 'Bengaluru harmonic actuator plant shutdown during Days 4-10 of 14-day horizon.',
       datasetVersion: '1.0.0-canonical',
       randomSeed: 'SEED_2026_SCM_V1',
       criticalSupplierId: 'sup-01',
@@ -282,7 +283,7 @@ export default function PlannerPage() {
               />
             )}
 
-            {activeTab === 'disruption' && (
+            {activeTab === 'disruptions' && (
               <DisruptionExplorerTab
                 impact={impact}
                 scenario={currentScenario}
@@ -291,39 +292,64 @@ export default function PlannerPage() {
               />
             )}
 
-            {activeTab === 'agents' && (
-              <RecoveryIntelligenceTab
-                proposals={proposals}
-                latestRun={latestRun}
-                runEvents={runEvents}
-                isRunning={isRunning}
-                onTriggerRun={handleTriggerRun}
-              />
+            {activeTab === 'recovery' && (
+              <div className="space-y-6">
+                <div className="flex items-center gap-6 border-b border-[#c6c6c6] pb-2">
+                  <button 
+                    onClick={() => setActiveSubTab('compare')}
+                    className={`font-mono text-sm font-bold pb-2 -mb-2.5 ${activeSubTab === 'compare' ? 'text-[#000000] border-b-2 border-[#000000]' : 'text-[#979797]'}`}
+                  >
+                    Compare Options
+                  </button>
+                  <button 
+                    onClick={() => setActiveSubTab('review')}
+                    className={`font-mono text-sm font-bold pb-2 -mb-2.5 ${activeSubTab === 'review' ? 'text-[#000000] border-b-2 border-[#000000]' : 'text-[#979797]'}`}
+                  >
+                    Review & Approve
+                  </button>
+                  <button 
+                    onClick={() => setActiveSubTab('intelligence')}
+                    className={`font-mono text-sm font-bold pb-2 -mb-2.5 ${activeSubTab === 'intelligence' ? 'text-[#000000] border-b-2 border-[#000000]' : 'text-[#979797]'}`}
+                  >
+                    Agent Intelligence
+                  </button>
+                </div>
+
+                {activeSubTab === 'compare' && (
+                  <ScenarioComparisonTab
+                    scenario={currentScenario}
+                    comparison={comparison}
+                    isRunning={isRunning}
+                    onUpdateScenario={handleUpdateScenario}
+                    onTriggerRerun={handleTriggerRun}
+                    onNavigateToReview={() => setActiveSubTab('review')}
+                  />
+                )}
+                
+                {activeSubTab === 'review' && pendingPlan && (
+                  <PlanReviewTab
+                    plan={pendingPlan}
+                    onPlanUpdated={(updated) => {
+                      setPendingPlan(updated);
+                      fetchDecisionHistory(selectedScenarioId).then(setDecisions);
+                    }}
+                    currentUser={currentUser}
+                  />
+                )}
+
+                {activeSubTab === 'intelligence' && (
+                  <RecoveryIntelligenceTab
+                    proposals={proposals}
+                    latestRun={latestRun}
+                    runEvents={runEvents}
+                    isRunning={isRunning}
+                    onTriggerRun={handleTriggerRun}
+                  />
+                )}
+              </div>
             )}
 
-            {activeTab === 'scenarios' && (
-              <ScenarioComparisonTab
-                scenario={currentScenario}
-                comparison={comparison}
-                isRunning={isRunning}
-                onUpdateScenario={handleUpdateScenario}
-                onTriggerRerun={handleTriggerRun}
-                onNavigateToReview={() => setActiveTab('review')}
-              />
-            )}
-
-            {activeTab === 'review' && pendingPlan && (
-              <PlanReviewTab
-                plan={pendingPlan}
-                onPlanUpdated={(updated) => {
-                  setPendingPlan(updated);
-                  fetchDecisionHistory(selectedScenarioId).then(setDecisions);
-                }}
-                currentUser={currentUser}
-              />
-            )}
-
-            {activeTab === 'history' && (
+            {activeTab === 'decisions' && (
               <DecisionHistoryTab
                 decisions={decisions}
                 runs={latestRun ? [latestRun] : []}

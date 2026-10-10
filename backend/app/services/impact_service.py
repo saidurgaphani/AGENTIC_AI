@@ -22,7 +22,7 @@ class ImpactService:
         supplier = self.db.query(Supplier).filter(Supplier.id == crit_sup_id).first()
         sup_code = supplier.code if supplier else "SUP-01"
         sup_name = supplier.name if supplier else "AeroCore Dynamics"
-        sup_loc = supplier.location if supplier else "Sendai, Miyagi Prefecture, Japan"
+        sup_loc = supplier.location if supplier else "Bengaluru, Karnataka, India"
 
         # Supplier products & BOM
         sp = self.db.query(SupplierProduct).filter(SupplierProduct.supplier_id == crit_sup_id).first()
@@ -48,7 +48,7 @@ class ImpactService:
 
         # Timeline generation
         # Canonical benchmark stockout modeling
-        # Sendai disruption starts Day 4. With 600 units plant buffer (3 days safety stock):
+        # Bengaluru disruption starts Day 4. With 600 units plant buffer (3 days safety stock):
         # Day 1..3: Normal supply & demand (600 units on hand, measured)
         # Day 4: 400 units on hand (Day 1 of disruption)
         # Day 5: 200 units on hand (Day 2 of disruption)

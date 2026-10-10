@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -14,9 +15,9 @@
   --color-voltage-yellow: #fff100;
 
   /* Typography */
-  --font-display-family: var(--font-display), "Barlow Condensed", Anton, "Bebas Neue", sans-serif;
-  --font-body-family: var(--font-body), Inter, system-ui, -apple-system, sans-serif;
-  --font-mono-family: var(--font-mono), "JetBrains Mono", monospace;
+  --font-display-family: "Barlow Condensed", Anton, "Bebas Neue", sans-serif;
+  --font-body-family: Inter, system-ui, -apple-system, sans-serif;
+  --font-mono-family: "JetBrains Mono", monospace;
 
   /* Layout */
   --page-max-width: 1200px;

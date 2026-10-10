@@ -24,7 +24,7 @@ class InventoryAgent:
         plants = self.db.query(ProductionResource).filter(ProductionResource.active == True).all()
         plant = plants[0] if plants else None
         plant_id = plant.id if plant else "plant-01"
-        plant_name = plant.name if plant else "Austin Advanced Manufacturing Facility (Plant Alpha)"
+        plant_name = plant.name if plant else "Hyderabad Advanced Manufacturing Facility (Plant Alpha)"
 
         # Query on-hand raw component inventory from DB
         inv_record = self.db.query(InventoryRecord).filter(

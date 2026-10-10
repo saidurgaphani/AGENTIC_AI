@@ -121,10 +121,10 @@ class CoordinatorService:
 
             # Validate entity references
             for eid in raw.get("affected_entity_ids", []):
-                if eid.startswith("sup-") and eid not in valid_suppliers:
+                if eid.lower().startswith("sup-") and eid not in valid_suppliers:
                     status = "REJECTED"
                     rejection_reasons.append(f"Supplier ID {eid} does not exist in active registry")
-                elif eid.startswith("lane-") and eid not in valid_lanes:
+                elif eid.lower().startswith("lane-") and eid not in valid_lanes:
                     status = "REJECTED"
                     rejection_reasons.append(f"Lane ID {eid} does not exist in transport registry")
 

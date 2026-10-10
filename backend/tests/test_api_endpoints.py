@@ -32,7 +32,7 @@ def test_api_scenarios_list():
     data = res.json()
     assert isinstance(data, list)
     assert len(data) >= 1
-    assert data[0]["critical_supplier_id"] == "sup-01"
+    assert data[0]["critical_supplier_id"] == "SUP-01"
 
 def test_api_scenario_runs():
     """Verify that the FastAPI simulation execution path correctly calculates all 3 strategies."""

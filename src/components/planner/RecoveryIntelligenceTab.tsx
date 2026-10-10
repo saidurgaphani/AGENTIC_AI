@@ -59,7 +59,7 @@ export function RecoveryIntelligenceTab({
       name: 'Supplier-Risk Agent',
       model: 'Google Gemini 1.5 Pro',
       objective: 'Evaluate qualified alternate vendors & capacity limits.',
-      actionFound: 'Identified Vanguard Mechatronics (SUP-02 · Munich)',
+      actionFound: 'Identified Vanguard Mechatronics (SUP-02 · Pune)',
       proposalsCount: proposals.filter((p) => p.agentType === 'SUPPLIER_RISK').length,
       confidence: '94%',
       status: 'OPERATIONAL',
@@ -75,12 +75,12 @@ export function RecoveryIntelligenceTab({
       status: 'OPERATIONAL',
     },
     {
-      role: 'INVENTORY' as AgentRole,
+      role: 'IGJENTORY' as AgentRole,
       name: 'Inventory Agent',
       model: 'Google Gemini 1.5 Flash',
       objective: 'Calculate buffer safety stock depletion & staged production drawdowns.',
       actionFound: 'Scheduled 600-unit drawdown without plant starvation',
-      proposalsCount: proposals.filter((p) => p.agentType === 'INVENTORY').length,
+      proposalsCount: proposals.filter((p) => p.agentType === 'IGJENTORY').length,
       confidence: '96%',
       status: 'OPERATIONAL',
     },
@@ -89,7 +89,7 @@ export function RecoveryIntelligenceTab({
       name: 'Demand Agent',
       model: 'Google Gemini 1.5 Flash',
       objective: 'Audit downstream customer SLA tiers & backorder penalties.',
-      actionFound: '100% allocation priority to Columbus Medical Hub (Tier 1)',
+      actionFound: '100% allocation priority to Mumbai Medical Hub (Tier 1)',
       proposalsCount: proposals.filter((p) => p.agentType === 'DEMAND').length,
       confidence: '99%',
       status: 'OPERATIONAL',
@@ -256,7 +256,7 @@ export function RecoveryIntelligenceTab({
 
           <div className="flex items-center gap-1.5 font-mono text-xs">
             <span className="text-[#979797] text-[10px] uppercase mr-1">Filter Agent:</span>
-            {['ALL', 'SUPPLIER_RISK', 'LOGISTICS', 'INVENTORY', 'DEMAND'].map((f) => (
+            {['ALL', 'SUPPLIER_RISK', 'LOGISTICS', 'IGJENTORY', 'DEMAND'].map((f) => (
               <button
                 key={f}
                 onClick={() => setSelectedAgentFilter(f)}

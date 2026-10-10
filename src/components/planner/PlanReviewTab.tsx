@@ -47,9 +47,9 @@ export function PlanReviewTab({
   const [showRejectModal, setShowRejectModal] = useState(false);
 
   const [approvalRationale, setApprovalRationale] = useState(
-    'Authorized $48,200 air freight premium to guarantee Tier-1 Medical SLA compliance at Columbus DC.'
+    'Authorized ₹40,48,800 air freight premium to guarantee Tier-1 Medical SLA compliance at Mumbai DC.'
   );
-  const [authorizedBudget, setAuthorizedBudget] = useState(48200);
+  const [authorizedBudget, setAuthorizedBudget] = useState(4048800);
   const [confirmIrreversible, setConfirmIrreversible] = useState(false);
 
   const [rejectionReason, setRejectionReason] = useState('');
@@ -188,14 +188,14 @@ export function PlanReviewTab({
             {formatCurrency(plan.expectedLandedCost)}
           </span>
           <span className="font-mono text-[11px] text-[#10b981] font-semibold">
-            -$102,400 Penalty Savings
+            -₹86,01,600 Penalty Savings
           </span>
         </div>
 
         <div className="card-standard border border-[#c6c6c6]/40 p-5 bg-[#ffffff]">
           <span className="font-mono text-xs text-[#979797] uppercase block">Authorized Budget Delta</span>
           <span className="font-display text-4xl text-[#000000] block mt-1">
-            +$48,200
+            +₹40,48,800
           </span>
           <span className="font-mono text-[11px] text-[#444444]">
             Expedited Freight + Supplier Delta
@@ -356,7 +356,7 @@ export function PlanReviewTab({
 
               <div>
                 <label className="text-[#979797] uppercase text-[10px] block mb-1">
-                  Authorized Budget Delta ($ USD)
+                  Authorized Budget Delta (₹ INR)
                 </label>
                 <input
                   type="number"
@@ -375,7 +375,7 @@ export function PlanReviewTab({
                   className="mt-1"
                 />
                 <label htmlFor="confirm-cb" className="text-[11px] text-[#444444] leading-tight">
-                  I confirm authorization of $48,200 emergency freight & procurement budget. I understand
+                  I confirm authorization of ₹40,48,800 emergency freight & procurement budget. I understand
                   this is an auditable management decision.
                 </label>
               </div>

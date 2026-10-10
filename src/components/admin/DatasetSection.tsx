@@ -65,7 +65,7 @@ export function DatasetSection({ onRefreshOverview }: DatasetSectionProps) {
       );
     } else {
       setCsvContent(
-        'code,name,location,criticality\nSUP-04,Apex Micro-Machining,Kyoto Japan,SECONDARY\nSUP-05,Nokia Mechatronics,Espoo Finland,ALTERNATE'
+        'code,name,location,criticality\nSUP-04,Apex Micro-Machining,Kyoto India,SECONDARY\nSUP-05,Nokia Mechatronics,Espoo Finland,ALTERNATE'
       );
     }
   };

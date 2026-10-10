@@ -10,13 +10,11 @@ def test_neon_connection():
 
 def test_neon_tables_exist():
     engine = create_engine(settings.sqlalchemy_database_uri)
-    with engine.connect() as conn:
-        tables = conn.execute(text(
-            "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'"
-        )).fetchall()
-        table_names = [t[0] for t in tables]
-        assert "suppliers" in table_names
-        assert "products" in table_names
-        assert "scenarios" in table_names
-        assert "planning_runs" in table_names
-        assert "recovery_plans" in table_names
+    from sqlalchemy import inspect
+    insp = inspect(engine)
+    table_names = insp.get_table_names()
+    assert "suppliers" in table_names
+    assert "products" in table_names
+    assert "scenarios" in table_names
+    assert "planning_runs" in table_names
+    assert "recovery_plans" in table_names

@@ -26,7 +26,7 @@ class DemandAgent:
         tier2_dc = next((d for d in dcs if d.service_tier != "TIER_1_CRITICAL"), None)
 
         tier1_code = tier1_dc.code if tier1_dc else "DC-EAST"
-        tier1_name = tier1_dc.name if tier1_dc else "Columbus Regional Distribution Center"
+        tier1_name = tier1_dc.name if tier1_dc else "Mumbai Regional Distribution Center"
         tier1_sla = float(tier1_dc.target_sla_percent) if tier1_dc else 98.0
         tier2_code = tier2_dc.code if tier2_dc else "DC-WEST"
 
@@ -60,7 +60,7 @@ class DemandAgent:
                 f"{tier1_code} holds TIER_1_CRITICAL service tier with {tier1_sla}% target SLA ({tier1_daily} units/day)",
                 f"Total demand exposed during {disruption_days}-day disruption window is {total_exposed_demand} units",
                 f"Contractual terms permit 24-48h scheduling notifications for Tier-2 accounts at {tier2_code}",
-                "Customer SLA penalty clause: $250/unit breach penalty on Tier-1 medical equipment accounts",
+                "Customer SLA penalty clause: ₹21000/unit breach penalty on Tier-1 medical equipment accounts",
             ],
             "expected_benefits": f"Guarantees 0% SLA breach rate on high-criticality {tier1_code} customer orders",
             "expected_cost_delta": -4500.0,

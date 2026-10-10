@@ -314,7 +314,7 @@ export function DisruptionSection({ onRefreshOverview }: DisruptionSectionProps)
                 }
                 className="w-full bg-[#f3f3f3] border border-[#c6c6c6] rounded-xl p-2.5 text-xs font-mono text-[#000000]"
               />
-              <span className="text-[10px] text-[#979797]">USD ($) per unfulfilled unit-day backorder</span>
+              <span className="text-[10px] text-[#979797]">INR (₹) per unfulfilled unit-day backorder</span>
             </div>
           </div>
 
@@ -437,7 +437,7 @@ export function DisruptionSection({ onRefreshOverview }: DisruptionSectionProps)
             <div className="p-4 rounded-xl bg-[#f3f3f3]">
               <span className="text-[#979797] block text-[10px] uppercase">Penalty Exposure</span>
               <span className="font-display text-3xl text-red-700 block mt-1">
-                ${impactData.financialExposure.potentialBackorderPenaltyUSD.toLocaleString()}
+                ₹{impactData.financialExposure.potentialBackorderPenaltyUSD.toLocaleString()}
               </span>
               <span className="text-[10px] text-[#444444]">Without multi-agent recovery</span>
             </div>
@@ -495,10 +495,10 @@ export function DisruptionSection({ onRefreshOverview }: DisruptionSectionProps)
             <div className="p-4 rounded-xl bg-[#f3f3f3]">
               <span className="text-[#979797] text-[10px] uppercase block">Total Landed Cost</span>
               <span className="font-display text-3xl text-[#000000] block mt-1">
-                ${executionResult.result.totalLandedCost.toLocaleString()}
+                ₹{executionResult.result.totalLandedCost.toLocaleString()}
               </span>
               <span className="text-[10px] text-[#444444]">
-                +${executionResult.result.costDeltaAgainstBaseline.toLocaleString()} vs Unmitigated
+                +₹{executionResult.result.costDeltaAgainstBaseline.toLocaleString()} vs Unmitigated
               </span>
             </div>
 

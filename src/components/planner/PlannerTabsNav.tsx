@@ -11,11 +11,9 @@ import {
 
 export type PlannerTabId =
   | 'overview'
-  | 'disruption'
-  | 'agents'
-  | 'scenarios'
-  | 'review'
-  | 'history';
+  | 'disruptions'
+  | 'recovery'
+  | 'decisions';
 
 interface PlannerTabsNavProps {
   activeTab: PlannerTabId;
@@ -38,36 +36,22 @@ export function PlannerTabsNav({
       badge: null,
     },
     {
-      id: 'disruption' as PlannerTabId,
-      label: 'Disruption Explorer',
+      id: 'disruptions' as PlannerTabId,
+      label: 'Disruptions',
       icon: AlertTriangle,
       badge: activeDisruptionsCount > 0 ? `${activeDisruptionsCount} ACTIVE` : null,
       badgeColor: 'bg-[#fff100] text-[#000000]',
     },
     {
-      id: 'agents' as PlannerTabId,
-      label: 'Recovery Intelligence',
-      icon: Bot,
-      badge: '4 AGENTS',
-      badgeColor: 'bg-[#f3f3f3] text-[#444444]',
-    },
-    {
-      id: 'scenarios' as PlannerTabId,
-      label: 'Scenario Comparison',
+      id: 'recovery' as PlannerTabId,
+      label: 'Recovery Plans',
       icon: Layers,
-      badge: '3 STRATEGIES',
-      badgeColor: 'bg-[#f3f3f3] text-[#444444]',
-    },
-    {
-      id: 'review' as PlannerTabId,
-      label: 'Plan Review & Approval',
-      icon: FileCheck2,
       badge: pendingReviewsCount > 0 ? `${pendingReviewsCount} PENDING` : 'READY',
       badgeColor: pendingReviewsCount > 0 ? 'bg-[#fff100] text-[#000000]' : 'bg-[#d1ffca] text-[#000000]',
     },
     {
-      id: 'history' as PlannerTabId,
-      label: 'Decision History',
+      id: 'decisions' as PlannerTabId,
+      label: 'Decisions',
       icon: History,
       badge: null,
     },

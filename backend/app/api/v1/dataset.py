@@ -16,7 +16,7 @@ def get_current_dataset(db: Session = Depends(get_db)):
         return {
             "version": "1.0.0-canonical",
             "seed": "SEED_2026_SCM_V1",
-            "currency": "USD",
+            "currency": "INR",
             "status": "CANONICAL",
         }
     return {
@@ -54,7 +54,7 @@ def validate_dataset_governance(db: Session = Depends(get_db)):
             "id": "CHECK-03",
             "name": "Currency & Unit Uniformity",
             "passed": True,
-            "details": "All unit costs and shortage penalties normalized in USD.",
+            "details": "All unit costs and shortage penalties normalized in INR.",
         },
         {
             "id": "CHECK-04",

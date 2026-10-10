@@ -79,7 +79,7 @@ class SupplierRiskAgent:
                 f"{crit_code} ({crit_name}) is disrupted for {duration_days} days (Days {start_day} to {end_day})",
                 f"{alt_name} ({alt_code}) holds active qualification for {prod_sku} in supplier registry",
                 f"Confirmed {alt_cap} units/day spare capacity exceeds requested {daily_demand} units/day requirement",
-                f"Unit purchase cost = ${alt_cost:.2f} vs baseline ${baseline_cost:.2f} (+${cost_delta_per_unit:.2f}/unit delta)",
+                f"Unit purchase cost = ₹{alt_cost:.2f} vs baseline ₹{baseline_cost:.2f} (+₹{cost_delta_per_unit:.2f}/unit delta)",
                 f"Standard lead time is {alt_lead} days vs baseline {baseline_lead} days; requires expedited shipping to avoid stockout",
             ],
             "expected_benefits": f"Replaces 100% of disrupted component volume ({total_replacement_units} units) during the {duration_days}-day outage",
@@ -101,7 +101,7 @@ Analyze supplier risk and alternate sourcing:
 - Component: {prod_sku} ({target_product_id})
 - Daily Needed Volume: {daily_demand} units, Total: {total_replacement_units} units
 - Qualified Alternate: {alt_code} ({alt_name}, {alt_id})
-  Capacity: {alt_cap} units/day, Unit Cost: ${alt_cost:.2f} (Delta: +${cost_delta_per_unit:.2f})
+  Capacity: {alt_cap} units/day, Unit Cost: ₹{alt_cost:.2f} (Delta: +₹{cost_delta_per_unit:.2f})
   Lead time: {alt_lead} days (vs baseline {baseline_lead} days)
 Provide structured sourcing recommendation adhering to schema.
 """

@@ -130,7 +130,7 @@ export function ConstraintSection({ onRefreshOverview }: ConstraintSectionProps)
         </div>
 
         <div className="flex items-center gap-2 font-mono text-xs overflow-x-auto">
-          {['ALL', 'INVENTORY', 'CAPACITY', 'SOURCING', 'SERVICE', 'TRANSPORT'].map((cat) => (
+          {['ALL', 'IGJENTORY', 'CAPACITY', 'SOURCING', 'SERVICE', 'TRANSPORT'].map((cat) => (
             <button
               key={cat}
               onClick={() => setCategoryFilter(cat)}

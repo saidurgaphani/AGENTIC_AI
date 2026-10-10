@@ -664,7 +664,7 @@ export function NetworkSection({ onRefreshOverview }: NetworkSectionProps) {
                 <input
                   type="text"
                   required
-                  placeholder="Kyoto, Japan"
+                  placeholder="Kyoto, India"
                   value={newSupplier.location}
                   onChange={(e) => setNewSupplier({ ...newSupplier, location: e.target.value })}
                   className="w-full bg-[#f3f3f3] border border-[#c6c6c6] rounded-lg p-2 text-xs"
@@ -753,7 +753,7 @@ export function NetworkSection({ onRefreshOverview }: NetworkSectionProps) {
               </div>
 
               <div>
-                <label className="block text-[#444444] mb-1">Standard Cost ($ USD)</label>
+                <label className="block text-[#444444] mb-1">Standard Cost (₹ INR)</label>
                 <input
                   type="number"
                   required

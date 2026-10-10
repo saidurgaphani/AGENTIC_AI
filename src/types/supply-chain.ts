@@ -80,7 +80,7 @@ export interface DisruptionScenario {
   shortagePenaltyPerUnit: number;
 }
 
-export type AgentRole = 'DEMAND' | 'INVENTORY' | 'SUPPLIER_RISK' | 'LOGISTICS' | 'COORDINATOR';
+export type AgentRole = 'DEMAND' | 'IGJENTORY' | 'SUPPLIER_RISK' | 'LOGISTICS' | 'COORDINATOR';
 
 export interface AgentProposal {
   proposalId: string;

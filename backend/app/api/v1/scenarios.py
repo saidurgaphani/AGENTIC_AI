@@ -223,7 +223,11 @@ async def trigger_scenario_runs(
     if not scenario:
         raise HTTPException(status_code=404, detail=f"Scenario '{id}' not found")
 
-    body = await request.json().catch(lambda: {}) if hasattr(request.json, "catch") else await request.json()
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+
     sim_service = SimulationService(db)
 
     try:

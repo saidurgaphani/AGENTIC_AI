@@ -25,7 +25,7 @@ class DatasetVersion(Base):
     version = Column(String(32), unique=True, nullable=False)
     name = Column(String(255), nullable=False)
     seed = Column(String(64), nullable=False)
-    currency = Column(String(16), default="USD", nullable=False)
+    currency = Column(String(16), default="INR", nullable=False)
     manifest = Column(JSONType, nullable=True)
     imported_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     status = Column(String(32), default="ACTIVE", nullable=False)

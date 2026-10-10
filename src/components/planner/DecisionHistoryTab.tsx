@@ -78,7 +78,7 @@ export function DecisionHistoryTab({
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => onNavigateTab('review')}
+              onClick={() => onNavigateTab('recovery')}
               className="btn-dark text-xs py-2 px-4 inline-flex items-center gap-1.5"
             >
               <span>Reopen Active Plan</span>
@@ -176,7 +176,7 @@ export function DecisionHistoryTab({
                   <div className="flex items-center justify-between pt-1 text-[10px] text-[#979797] border-t border-[#c6c6c6]/30">
                     <span>Authorized By: <strong>{decision.plannerId}</strong></span>
                     <button
-                      onClick={() => onNavigateTab('review')}
+                      onClick={() => onNavigateTab('recovery')}
                       className="text-[#000000] underline font-semibold hover:text-[#000000]"
                     >
                       Inspect Plan Details →

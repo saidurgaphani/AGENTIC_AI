@@ -141,7 +141,7 @@ export function DecisionWorkflow() {
                 SUMMARY: Dual-Sourcing Shift to SUP-02 + 2-Day Air Freight
               </div>
               <p>
-                Authorized spend: +$48,200. Projected fill rate: 99.6%. Averts $150,000 in customer backlog penalties at Columbus Tier-1 accounts. Zero line starvation at Austin plant.
+                Authorized spend: +₹40,48,800. Projected fill rate: 99.6%. Averts ₹1,26,00,000 in customer backlog penalties at Mumbai Tier-1 accounts. Zero line starvation at Hyderabad plant.
               </p>
             </div>
             <div className="text-[11px] text-[#979797]">

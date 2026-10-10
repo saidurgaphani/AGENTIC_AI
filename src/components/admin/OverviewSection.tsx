@@ -281,7 +281,7 @@ export function OverviewSection({
                       </span>
                       <span className="text-[10px] text-[#444444]">
                         {metricsObj?.totalLandedCost
-                          ? `$${metricsObj.totalLandedCost.toLocaleString()}`
+                          ? `₹${metricsObj.totalLandedCost.toLocaleString()}`
                           : '-'}
                       </span>
                     </div>

@@ -14,7 +14,7 @@ export const DATASET_MANIFEST = {
   version: '1.0.0-canonical',
   datasetId: 'SCM-ECHO-2026-POC',
   seed: 'SEED_2026_SCM_V1',
-  currency: 'USD ($)',
+  currency: 'INR (₹)',
   timeBucket: 'Daily (14 periods)',
   createdAt: '2026-10-09T00:00:00Z',
   validatedBy: 'Antigravity Deterministic Coordinator',
@@ -28,7 +28,7 @@ export const PRODUCTS: Product[] = [
     name: 'Precision Harmonic Actuator Core',
     type: 'COMPONENT',
     uom: 'units',
-    standardCost: 140,
+    standardCost: 11760,
   },
   {
     id: 'prod-02',
@@ -36,7 +36,7 @@ export const PRODUCTS: Product[] = [
     name: 'Machined Titanium Frame Housing',
     type: 'COMPONENT',
     uom: 'units',
-    standardCost: 85,
+    standardCost: 7140,
   },
   {
     id: 'prod-03',
@@ -44,7 +44,7 @@ export const PRODUCTS: Product[] = [
     name: 'Autonomous Industrial Robotic Drive Unit',
     type: 'FINISHED_GOOD',
     uom: 'units',
-    standardCost: 450,
+    standardCost: 37800,
   },
 ];
 
@@ -54,7 +54,7 @@ export const SUPPLIERS: Supplier[] = [
     id: 'sup-01',
     code: 'SUP-01',
     name: 'AeroCore Dynamics',
-    location: 'Sendai, Japan (Precision Micro-Machining)',
+    location: 'Bengaluru, India (Precision Micro-Machining)',
     criticality: 'CRITICAL',
     active: true,
     disrupted: true, // Disrupted for 7 days
@@ -63,7 +63,7 @@ export const SUPPLIERS: Supplier[] = [
     id: 'sup-02',
     code: 'SUP-02',
     name: 'Vanguard Mechatronics',
-    location: 'Munich, Germany (Specialty Drive Components)',
+    location: 'Pune, India (Specialty Drive Components)',
     criticality: 'ALTERNATE',
     active: true,
     disrupted: false,
@@ -72,7 +72,7 @@ export const SUPPLIERS: Supplier[] = [
     id: 'sup-03',
     code: 'SUP-03',
     name: 'Global Alloy Castings',
-    location: 'Monterrey, Mexico (Structural Housings)',
+    location: 'Chennai, India (Structural Housings)',
     criticality: 'SECONDARY',
     active: true,
     disrupted: false,
@@ -88,8 +88,8 @@ export const SUPPLIER_PRODUCTS: SupplierProduct[] = [
     normalLeadTimeDays: 3,
     expediteLeadTimeDays: 2,
     dailyCapacity: 300,
-    unitPurchaseCost: 140,
-    expediteUnitCost: 190,
+    unitPurchaseCost: 11760,
+    expediteUnitCost: 15960,
   },
   {
     supplierId: 'sup-02',
@@ -98,8 +98,8 @@ export const SUPPLIER_PRODUCTS: SupplierProduct[] = [
     normalLeadTimeDays: 5,
     expediteLeadTimeDays: 2,
     dailyCapacity: 250,
-    unitPurchaseCost: 195,
-    expediteUnitCost: 260,
+    unitPurchaseCost: 16380,
+    expediteUnitCost: 21840,
   },
   {
     supplierId: 'sup-03',
@@ -108,8 +108,8 @@ export const SUPPLIER_PRODUCTS: SupplierProduct[] = [
     normalLeadTimeDays: 2,
     expediteLeadTimeDays: 1,
     dailyCapacity: 400,
-    unitPurchaseCost: 85,
-    expediteUnitCost: 120,
+    unitPurchaseCost: 7140,
+    expediteUnitCost: 10080,
   },
 ];
 
@@ -117,11 +117,11 @@ export const SUPPLIER_PRODUCTS: SupplierProduct[] = [
 export const PLANTS: PlantResource[] = [
   {
     id: 'plant-01',
-    name: 'Austin Advanced Manufacturing Facility (Plant Alpha)',
-    location: 'Austin, Texas, USA',
+    name: 'Hyderabad Advanced Manufacturing Facility (Plant Alpha)',
+    location: 'Hyderabad, Telangana, India',
     producedSku: 'SKU-900',
     dailyCapacity: 300,
-    dailyOperatingCost: 12500,
+    dailyOperatingCost: 1050000,
   },
 ];
 
@@ -144,16 +144,16 @@ export const DISTRIBUTION_CENTERS: DistributionCenter[] = [
   {
     id: 'dc-01',
     code: 'DC-EAST',
-    name: 'Columbus Regional Distribution Center',
-    location: 'Columbus, Ohio, USA',
+    name: 'Mumbai Regional Distribution Center',
+    location: 'Mumbai, Maharashtra, India',
     serviceTier: 'TIER_1_CRITICAL',
     targetSlaPercent: 98,
   },
   {
     id: 'dc-02',
     code: 'DC-WEST',
-    name: 'Reno Inbound Logistics Hub',
-    location: 'Reno, Nevada, USA',
+    name: 'Ahmedabad Inbound Logistics Hub',
+    location: 'Ahmedabad, Gujarat, India',
     serviceTier: 'TIER_2_STANDARD',
     targetSlaPercent: 90,
   },
@@ -167,9 +167,9 @@ export const TRANSPORT_LANES: TransportLane[] = [
     destinationId: 'plant-01',
     mode: 'STANDARD_TRUCKLOAD',
     transitDays: 3,
-    costPerUnit: 18,
+    costPerUnit: 1512,
     expeditedTransitDays: 2,
-    expeditedCostPerUnit: 45,
+    expeditedCostPerUnit: 3780,
   },
   {
     id: 'lane-02',
@@ -177,9 +177,9 @@ export const TRANSPORT_LANES: TransportLane[] = [
     destinationId: 'plant-01',
     mode: 'INTERMODAL',
     transitDays: 5,
-    costPerUnit: 24,
+    costPerUnit: 2016,
     expeditedTransitDays: 2,
-    expeditedCostPerUnit: 68, // Trans-Atlantic priority air
+    expeditedCostPerUnit: 5712, // Priority air
   },
   {
     id: 'lane-03',
@@ -187,7 +187,7 @@ export const TRANSPORT_LANES: TransportLane[] = [
     destinationId: 'plant-01',
     mode: 'STANDARD_TRUCKLOAD',
     transitDays: 2,
-    costPerUnit: 12,
+    costPerUnit: 1008,
   },
   {
     id: 'lane-04',
@@ -195,7 +195,7 @@ export const TRANSPORT_LANES: TransportLane[] = [
     destinationId: 'dc-01',
     mode: 'STANDARD_TRUCKLOAD',
     transitDays: 1,
-    costPerUnit: 15,
+    costPerUnit: 1260,
   },
   {
     id: 'lane-05',
@@ -203,7 +203,7 @@ export const TRANSPORT_LANES: TransportLane[] = [
     destinationId: 'dc-02',
     mode: 'STANDARD_TRUCKLOAD',
     transitDays: 2,
-    costPerUnit: 22,
+    costPerUnit: 1848,
   },
 ];
 
@@ -221,7 +221,7 @@ export const CANONICAL_SCENARIO: DisruptionScenario = {
   evaluationHorizonDays: 14,
   safetyStockDays: 3, // 600 units (200 units/day * 3 days)
   dailyDemandUnits: 200, // 120 units at DC-EAST (Tier 1), 80 units at DC-WEST (Tier 2)
-  shortagePenaltyPerUnit: 150, // Contractual penalty per unit-day backordered
+  shortagePenaltyPerUnit: 12600, // Contractual penalty per unit-day backordered
 };
 
 // 9. Multi-Agent Structured Proposals
@@ -244,8 +244,8 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
       'SUPPLIER_PRODUCTS[sup-02].dailyCapacity (250) >= dailyAllocation (200)',
       'SUPPLIER_PRODUCTS[sup-02].qualificationStatus: ISO-9001/AS9100 Certified',
     ],
-    expectedBenefits: 'Offsets 1,400 units of lost component supply from Sendai facility',
-    expectedCostDelta: 77000, // 1400 * ($195 - $140) = +$77,000 unit cost delta
+    expectedBenefits: 'Offsets 1,400 units of lost component supply from Bengaluru facility',
+    expectedCostDelta: 6468000, // 1400 * (₹16380 - ₹11760) = +₹64,68,000 unit cost delta
     risks: ['SUP-02 lead time is 5 days under standard transit, risking Day 7–9 line starvation unless expedited.'],
     assumptions: ['SUP-02 maintains 250 units/day spare production slots throughout the disruption window.'],
     confidence: {
@@ -258,7 +258,7 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
   {
     proposalId: 'PROP-LOG-02',
     agentType: 'LOGISTICS',
-    actionSummary: 'Execute Priority Trans-Atlantic Air Freight on Munich-Austin Lane (Lane-02)',
+    actionSummary: 'Execute Priority Air Freight on Pune-Hyderabad Lane (Lane-02)',
     actionType: 'EXPEDITE_FREIGHT',
     affectedEntityIds: ['lane-02', 'sup-02', 'plant-01'],
     actionParameters: {
@@ -266,7 +266,7 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
       expeditedLeadTimeDays: 2,
       expediteVolume: 800,
       expediteDays: [4, 5, 6, 7],
-      premiumPerUnit: 44, // ($68 - $24)
+      premiumPerUnit: 3696, // (₹5712 - ₹2016)
     },
     evidenceRefs: [
       'TRANSPORT_LANES[lane-02].expeditedTransitDays === 2 days',
@@ -274,7 +274,7 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
       'Air carrier cargo space reserved under master service agreement contract L-992',
     ],
     expectedBenefits: 'Compresses transit from 5 days to 2 days, delivering first batch on Day 6 and preventing plant shutdown',
-    expectedCostDelta: 35200, // 800 * $44
+    expectedCostDelta: 2956800, // 800 * ₹3696
     risks: ['Subject to airport cargo handling congestion; requires advance slot booking.'],
     assumptions: ['Carrier honors guaranteed 48-hour tarmac-to-dock transit guarantee.'],
     confidence: {
@@ -287,7 +287,7 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
   {
     proposalId: 'PROP-DEM-03',
     agentType: 'DEMAND',
-    actionSummary: 'Protect Tier-1 Medical SLA at Columbus (DC-EAST) and smoothly pace DC-WEST',
+    actionSummary: 'Protect Tier-1 Medical SLA at Mumbai (DC-EAST) and smoothly pace DC-WEST',
     actionType: 'PRIORITY_PROTECT',
     affectedEntityIds: ['dc-01', 'dc-02'],
     actionParameters: {
@@ -297,12 +297,12 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
       deferredVolume: 100, // defer 100 units by 48 hours with customer notification
     },
     evidenceRefs: [
-      'DC-EAST contract specifies $2,500/day line-stop penalty for healthcare robotics',
+      'DC-EAST contract specifies ₹2,10,000/day line-stop penalty for healthcare robotics',
       'DC-WEST industrial clients accept 48h scheduled deferrals with volume rebate credit',
-      'Current finished goods stock buffer at Austin: 150 units',
+      'Current finished goods stock buffer at Hyderabad: 150 units',
     ],
     expectedBenefits: 'Guarantees zero breaches on high-penalty Tier-1 accounts while minimizing overall backlog friction',
-    expectedCostDelta: -4500, // avoidance of severe Tier-1 penalties offset by minor deferral rebate
+    expectedCostDelta: -378000, // avoidance of severe Tier-1 penalties offset by minor deferral rebate
     risks: ['DC-WEST customer satisfaction impact if delays exceed 48 hours.'],
     assumptions: ['Customer relations team issues automated dispatch notices on Day 5.'],
     confidence: {
@@ -313,8 +313,8 @@ export const CANONICAL_AGENT_PROPOSALS: AgentProposal[] = [
     createdAt: '2026-10-09T08:17:10Z',
   },
   {
-    proposalId: 'PROP-INV-04',
-    agentType: 'INVENTORY',
+    proposalId: 'PROP-IGJ-04',
+    agentType: 'IGJENTORY',
     actionSummary: 'Dynamic Safety Stock Drawdown and Controlled Component Allocation',
     actionType: 'BUFFER_ALLOCATION',
     affectedEntityIds: ['plant-01', 'prod-01'],

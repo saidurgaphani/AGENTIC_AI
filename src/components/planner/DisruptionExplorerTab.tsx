@@ -43,7 +43,7 @@ export function DisruptionExplorerTab({
   }>({
     type: 'supplier',
     id: 'sup-01',
-    name: 'AeroCore Dynamics (SUP-01 · Sendai, Japan)',
+    name: 'AeroCore Dynamics (SUP-01 · Bengaluru, India)',
   });
 
   const [entityDependencies, setEntityDependencies] = useState<any>(null);
@@ -131,7 +131,7 @@ export function DisruptionExplorerTab({
                 id: 'sup-01',
                 code: 'SUP-01',
                 name: 'AeroCore Dynamics',
-                location: 'Sendai, Japan',
+                location: 'Bengaluru, India',
                 criticality: 'CRITICAL',
                 status: 'SHUTDOWN (DAYS 4-10)',
                 isDisrupted: true,
@@ -141,7 +141,7 @@ export function DisruptionExplorerTab({
                 id: 'sup-02',
                 code: 'SUP-02',
                 name: 'Vanguard Mechatronics',
-                location: 'Munich, Germany',
+                location: 'Pune, India',
                 criticality: 'ALTERNATE',
                 status: 'AVAILABLE (CAPACITY 250 U/D)',
                 isDisrupted: false,
@@ -151,7 +151,7 @@ export function DisruptionExplorerTab({
                 id: 'sup-03',
                 code: 'SUP-03',
                 name: 'Global Alloy Castings',
-                location: 'Monterrey, Mexico',
+                location: 'Chennai, India',
                 criticality: 'SECONDARY',
                 status: 'NORMAL (CAPACITY 400 U/D)',
                 isDisrupted: false,
@@ -224,7 +224,7 @@ export function DisruptionExplorerTab({
               setSelectedEntity({
                 type: 'facility',
                 id: 'plant-01',
-                name: 'Austin Advanced Manufacturing Facility (Plant Alpha)',
+                name: 'Hyderabad Advanced Manufacturing Facility (Plant Alpha)',
               })
             }
             className={`p-4 rounded-xl border cursor-pointer transition-all ${
@@ -236,7 +236,7 @@ export function DisruptionExplorerTab({
             <div className="flex items-start justify-between">
               <div>
                 <span className="font-mono font-bold text-xs text-[#000000] block">
-                  Plant Alpha (Austin, TX)
+                  Plant Alpha (Hyderabad, TS)
                 </span>
                 <span className="font-mono text-[10px] text-[#979797] block mt-0.5">
                   High-Precision Robotic Assembly
@@ -285,8 +285,8 @@ export function DisruptionExplorerTab({
               {
                 id: 'dc-01',
                 code: 'DC-EAST',
-                name: 'Columbus Medical Logistics Hub',
-                location: 'Columbus, OH',
+                name: 'Mumbai Medical Logistics Hub',
+                location: 'Mumbai, MH',
                 tier: 'TIER_1_CRITICAL',
                 sla: '98% Target SLA',
                 demand: '120 Units / Day',
@@ -295,8 +295,8 @@ export function DisruptionExplorerTab({
               {
                 id: 'dc-02',
                 code: 'DC-WEST',
-                name: 'Reno Standard Fulfillment Center',
-                location: 'Reno, NV',
+                name: 'Ahmedabad Standard Fulfillment Center',
+                location: 'Ahmedabad, GJ',
                 tier: 'TIER_2_STANDARD',
                 sla: '90% Target SLA',
                 demand: '80 Units / Day',
@@ -588,7 +588,7 @@ export function DisruptionExplorerTab({
         <div className="p-3 bg-[#f3f3f3] rounded-xl text-mono text-[11px] text-[#444444] flex items-center gap-2">
           <Info className="w-4 h-4 text-[#979797]" />
           <span>
-            <strong>Authoritative Note:</strong> Inbound pipeline orders for Days 1–3 were dispatched prior to the Sendai shutdown. Days 7–13 experience zero raw component deliveries due to the 7-day outage and 3-day trans-Pacific transit lead time, resulting in unmitigated stockout starting Day 9.
+            <strong>Authoritative Note:</strong> Inbound pipeline orders for Days 1–3 were dispatched prior to the Bengaluru shutdown. Days 7–13 experience zero raw component deliveries due to the 7-day outage and 3-day inter-city transit lead time, resulting in unmitigated stockout starting Day 9.
           </span>
         </div>
       </div>

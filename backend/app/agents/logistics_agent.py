@@ -42,7 +42,7 @@ class LogisticsAgent:
             "proposal_id": "PROP-LOG-01",
             "agent_type": "LOGISTICS",
             "action_type": "EXPEDITE_FREIGHT",
-            "action_summary": f"Execute priority trans-Atlantic air freight on lane {lane_id} (Munich-Austin)",
+            "action_summary": f"Execute priority air freight on lane {lane_id} (Pune-Hyderabad)",
             "affected_entity_ids": [lane_id, "sup-02", "plant-01"],
             "action_parameters": {
                 "lane_id": lane_id,
@@ -66,7 +66,7 @@ class LogisticsAgent:
             "evidence_refs": [
                 f"Lane {lane_id} master freight contract authorizes guaranteed {expedited_transit}-day priority air cargo",
                 f"Delivers first 200-unit replenishment batch on Day {start_day + expedited_transit} morning, preventing Day 6 stockout cliff",
-                f"Incremental air freight premium = ${premium_delta:.2f}/unit (${expedited_cost:.2f} air vs ${standard_cost:.2f} {mode.lower()})",
+                f"Incremental air freight premium = ₹{premium_delta:.2f}/unit (₹{expedited_cost:.2f} air vs ₹{standard_cost:.2f} {mode.lower()})",
                 f"Expediting {expedite_units} units bridges pipeline lead time until standard {standard_transit}-day freight arrivals begin",
             ],
             "expected_benefits": f"Compresses transit lead time by {standard_transit - expedited_transit} full days, eliminating line stoppage",
@@ -84,10 +84,10 @@ class LogisticsAgent:
         prompt = f"""
 Analyze transportation lanes and freight expediting options:
 - Lane: {lane_id} ({lane.origin_id if lane else 'sup-02'} to {lane.destination_id if lane else 'plant-01'})
-- Standard Mode: {mode}, Transit: {standard_transit} days, Cost: ${standard_cost:.2f}/unit
-- Expedited Air Mode: Transit: {expedited_transit} days, Cost: ${expedited_cost:.2f}/unit
-- Premium Delta: ${premium_delta:.2f}/unit
-- Volume to expedite: {expedite_units} units, Total premium: ${total_expedite_cost:.2f}
+- Standard Mode: {mode}, Transit: {standard_transit} days, Cost: ₹{standard_cost:.2f}/unit
+- Expedited Air Mode: Transit: {expedited_transit} days, Cost: ₹{expedited_cost:.2f}/unit
+- Premium Delta: ₹{premium_delta:.2f}/unit
+- Volume to expedite: {expedite_units} units, Total premium: ₹{total_expedite_cost:.2f}
 Provide structured logistics proposal adhering to schema.
 """
         return call_gemini_or_grounded(

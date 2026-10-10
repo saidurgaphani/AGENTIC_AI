@@ -53,7 +53,7 @@ async def approve_plan(
         event_type="PLAN_APPROVED",
         target_entity="recovery_plans",
         target_id=plan.id,
-        details=f"Plan {plan.id} approved by {user.email}. Budget delta: ${budget_delta:.2f}. Rationale: {rationale}",
+        details=f"Plan {plan.id} approved by {user.email}. Budget delta: ₹{budget_delta:.2f}. Rationale: {rationale}",
         timestamp=now,
     )
     db.add(audit)

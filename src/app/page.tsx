@@ -12,7 +12,9 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#e5e5e5] text-[#000000] flex flex-col justify-between selection:bg-[#d1ffca] selection:text-[#000000]">
       {/* 8rem Height Header Navigation with Centered Floating Pill */}
-      <Navigation />
+      <div className="absolute top-0 left-0 right-0 z-50">
+        <Navigation />
+      </div>
 
       {/* Main Connected Narrative Flow */}
       <main className="flex-1 w-full flex flex-col">

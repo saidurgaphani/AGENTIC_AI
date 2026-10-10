@@ -190,7 +190,7 @@ export function SimulationRunsSection({ onRefreshOverview }: SimulationRunsSecti
                       </td>
                       <td className="p-3">
                         {metricsObj?.totalLandedCost
-                          ? `$${metricsObj.totalLandedCost.toLocaleString()}`
+                          ? `₹${metricsObj.totalLandedCost.toLocaleString()}`
                           : '-'}
                       </td>
                       <td className="p-3 text-[#979797]">{r.runtime_ms}ms</td>

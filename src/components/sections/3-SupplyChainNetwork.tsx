@@ -243,7 +243,7 @@ export function SupplyChainNetwork() {
               <span className="tag-voltage mb-2">CRITICAL COMPONENT</span>
               <div className="font-bold text-sm text-[#000000] mt-1">CMP-101: Precision Harmonic Actuator Core</div>
               <p className="text-[#444444] mt-2">
-                Manufactured to sub-micron tolerances. Dual-sourced between SUP-01 (Sendai) and SUP-02 (Munich). 1 unit required per finished drive.
+                Manufactured to sub-micron tolerances. Dual-sourced between SUP-01 (Bengaluru) and SUP-02 (Pune). 1 unit required per finished drive.
               </p>
               <div className="mt-4 pt-3 border-t border-[#c6c6c6]/30 flex justify-between">
                 <span>STANDARD UNIT COST:</span>
@@ -255,7 +255,7 @@ export function SupplyChainNetwork() {
               <span className="tag-mint mb-2">STRUCTURAL COMPONENT</span>
               <div className="font-bold text-sm text-[#000000] mt-1">CMP-102: Machined Titanium Frame Housing</div>
               <p className="text-[#444444] mt-2">
-                Cast structural enclosure sourced from SUP-03 (Monterrey). 2-day surface transit, highly stable inventory levels.
+                Cast structural enclosure sourced from SUP-03 (Chennai). 2-day surface transit, highly stable inventory levels.
               </p>
               <div className="mt-4 pt-3 border-t border-[#c6c6c6]/30 flex justify-between">
                 <span>STANDARD UNIT COST:</span>

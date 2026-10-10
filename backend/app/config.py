@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     
     # Mode
     ENVIRONMENT: str = "development"
+    CORS_ORIGINS: str = ""
 
     model_config = SettingsConfigDict(
         env_file=[

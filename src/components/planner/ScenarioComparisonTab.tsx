@@ -339,7 +339,7 @@ export function ScenarioComparisonTab({
               }}
               className="w-full bg-[#f3f3f3] text-[#000000] px-3 py-2 rounded-xl border border-[#c6c6c6] font-bold"
             />
-            <span className="text-[10px] text-[#979797]">Split: 120u Columbus + 80u Reno</span>
+            <span className="text-[10px] text-[#979797]">Split: 120u Mumbai + 80u Ahmedabad</span>
           </div>
 
           <div className="space-y-1.5">

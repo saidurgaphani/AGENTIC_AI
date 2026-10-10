@@ -89,10 +89,10 @@ class SupplyChainOptimizer:
             applied_exp_lead = self.alt_sup_lead_exp
             expedited_max_volume = None
 
-        # 1. Orders placed at primary supplier SUP-01 (Sendai)
+        # 1. Orders placed at primary supplier SUP-01 (Bengaluru)
         order_sup1 = {t: solver.IntVar(0, self.primary_sup_cap, f"ord_sup1_{t}") for t in T}
 
-        # 2. Orders placed at alternate supplier SUP-02 (Munich)
+        # 2. Orders placed at alternate supplier SUP-02 (Pune)
         cap_alt = applied_alt_cap if allow_alternate else 0
         order_sup2_norm = {t: solver.IntVar(0, cap_alt, f"ord_sup2_norm_{t}") for t in T}
         order_sup2_exp = {
